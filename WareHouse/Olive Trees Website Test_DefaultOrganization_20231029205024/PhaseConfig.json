@@ -1,0 +1,78 @@
+{
+  "Brainstorm": {
+    "assistant_role_name": "Marketing Director",
+    "user_role_name": "Chief Executive Officer",
+    "phase_prompt": [
+      "We are super effective at generating viral creative marketing campaign ideas for clients. The goal of our marketing campaigns is to generate more leads for our clients.",
+      "We have created the following products before:",
+      "Blog post: a well written informational blog post about a relevant subject for out client, that also generates leads and is SEO friendly to improve website ranking.",
+      "Email campaigns: Well thought campaigns with e-mail templates in the desired language, our e-mails are written to achieve maximum opening rates and interactivity.",
+      "Social Media content plans: A wel thought plan for the social media posts placed on our client's socials, we propose a specific post interval and tell you which content is best for your sector.",
+      "Social Media content idea's: Simple but effective Social Media post ideas to engage our client's users.",
+      "High Value Content: Content such as whitepapers that are helpful for the client's users and also engages them.",
+      "Here is the brief from the client: \"{task}\".",
+      "As the {assistant_role}, to satisfy the client, you should keep discussing with me to decide which idea we are to deliver that might have the biggest potential & ROI.",
+      "Note that we must ONLY discuss the campaign idea and do not discuss anything else! We should brainstorm and critique on each other's idea, after discussed more than 10 ideas, any of us must actively terminate the discussion by picking up the best idea we have discussed without any other words or reasons, return only one line using the format: \"<INFO> *\" where \"*\" represents the idea."
+    ]
+  },
+  "ContentCreation": {
+    "assistant_role_name": "Marketing Specialist",
+    "user_role_name": "Marketing Director",
+    "phase_prompt": [
+      "According to the new user's task and our initial idea, create the necessary content for the marketing campaign.",
+      "Task: \"{task}\".",
+      "Ideas:\"{ideas}\"",
+      "As the {assistant_role}, to satisfy the new user's demands, you should write one or multiple files and make sure that every detail of the marketing campaign and content are covered.",
+      "Think step by step and reason yourself to the right decisions to make sure we get it right.",
+      "Note that we must ONLY discuss the campaign idea and do not discuss anything else! We should brainstorm and critique on each other's idea, and once we did 2 iterations of content, any of us must actively terminate the discussion by replying only one line using the format: \"<INFO> *\" where \"*\" represents the generated content."
+    ]
+  },
+  "ContentReviewComment": {
+    "assistant_role_name": "Content Reviewer",
+    "user_role_name": "Marketing Specialist",
+    "phase_prompt": [
+      "According to the new user's task and our initial idea: ",
+      "Task: \"{task}\".",
+      "Ideas: \"{ideas}\"",
+      "Content:",
+      "\"{content}\"",
+      "As the {assistant_role}, to make the content of world class quality, ChatDev have formulated the following regulations:",
+      "1) all spelling should be correct",
+      "2) sentences should be grammatically correct",
+      "3) content can be playful to help and engage readers without trying to be too funny",
+      "Now, you should check the above regulations one by one and review the content in detail, propose one comment with the highest priority about the content, and give me instructions on how to fix. Tell me your comment with the highest priority and corresponding suggestions on revision. If the content is perfect and you have no comment on them, return only one line like \"<INFO> Finished\"."
+    ]
+  },
+  "ContentReviewModification": {
+    "assistant_role_name": "Marketing Specialist",
+    "user_role_name": "Content Reviewer",
+    "phase_prompt": [
+      "According to the new user's task, our idea and content, our first-edition content is listed below: ",
+      "Task: \"{task}\".",
+      "Ideas: \"{ideas}\"",
+      "Content: ",
+      "\"{content}\"",
+      "Comments on Content:",
+      "\"{comments}\"",
+      "As the {assistant_role}, to satisfy the new user's demand and make the content creative, interactive and interesting, you should modify corresponding content according to the comments. Then, output the full and complete content with all comments implemented using the format: \"<INFO> *\" where \"*\" represents the content."
+    ]
+  },
+  "ContentResult": {
+    "assistant_role_name": "Marketing Director",
+    "user_role_name": "Chief Executive Officer",
+    "phase_prompt": [
+      "The new user's task, our content and marketing plan are listed: ",
+      "Task: \"{task}\".",
+      "Ideas: \"{ideas}\"",
+      "Content: ",
+      "\"{content}\"",
+      "As the {assistant_role}, you should summarize the content and explain the marketing plan to the client in markdown using the following format, where \"TABLE OF CONTENTS\" is the table of contents from all headings, \"MARKETING PLAN\" is the summary of the marketing plan and \"CONTENT\" is the final content.",
+      "```",
+      "TABLE OF CONTENTS",
+      "# Marketing plan",
+      "MARKETING PLAN",
+      "# Content",
+      "CONTENT"
+    ]
+  }
+}

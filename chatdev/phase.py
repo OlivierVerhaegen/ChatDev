@@ -640,3 +640,85 @@ class Manual(Phase):
         chat_env._update_manuals(self.seminar_conclusion)
         chat_env.rewrite_manuals()
         return chat_env
+
+
+class Brainstorm(Phase):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def update_phase_env(self, chat_env):
+        self.phase_env.update({"task": chat_env.env_dict['task_prompt']})
+
+    def update_chat_env(self, chat_env) -> ChatEnv:
+        if len(self.seminar_conclusion) > 0 and "<INFO>" in self.seminar_conclusion:
+            chat_env.env_dict['ideas'] = self.seminar_conclusion.split("<INFO>")[-1].lower().replace(".", "").strip()
+        elif len(self.seminar_conclusion) > 0:
+            chat_env.env_dict['ideas'] = self.seminar_conclusion
+        else:
+            chat_env.env_dict['ideas'] = "I have no ideas"
+        log_and_print_online("**[Idea]**:\n\n {}".format(get_info(chat_env.env_dict['directory'], self.log_filepath)))
+        return chat_env
+    
+class ContentCreation(Phase):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def update_phase_env(self, chat_env):
+        self.phase_env.update({"task": chat_env.env_dict['task_prompt'],
+                               "ideas": chat_env.env_dict['ideas']})
+        
+    def update_chat_env(self, chat_env) -> ChatEnv:
+        if len(self.seminar_conclusion) > 0 and "<INFO>" in self.seminar_conclusion:
+            chat_env.env_dict['content'] = self.seminar_conclusion.split("<INFO>")[-1].lower().replace(".", "").strip()
+        elif len(self.seminar_conclusion) > 0:
+            chat_env.env_dict['content'] = self.seminar_conclusion
+        else:
+            chat_env.env_dict['content'] = "No content, sorry"
+        log_and_print_online("**[Content]**:\n\n {}".format(get_info(chat_env.env_dict['directory'], self.log_filepath)))
+        return chat_env
+    
+class ContentReviewComment(Phase):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def update_phase_env(self, chat_env):
+        self.phase_env.update({"task": chat_env.env_dict['task_prompt'],
+                               "ideas": chat_env.env_dict['ideas'],
+                               "content": chat_env.env_dict['content']})
+
+    def update_chat_env(self, chat_env) -> ChatEnv:
+        chat_env.env_dict['review_comments'] = self.seminar_conclusion
+        return chat_env
+    
+class ContentReviewModification(Phase):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def update_phase_env(self, chat_env):
+        self.phase_env.update({"task": chat_env.env_dict['task_prompt'],
+                               "ideas": chat_env.env_dict['ideas'],
+                               "content": chat_env.env_dict['content'],
+                               "comments": chat_env.env_dict['review_comments']})
+        
+    def update_chat_env(self, chat_env) -> ChatEnv:
+        if len(self.seminar_conclusion) > 0 and "<INFO>" in self.seminar_conclusion:
+            chat_env.env_dict['content'] = self.seminar_conclusion.split("<INFO>")[-1].lower().replace(".", "").strip()
+        elif len(self.seminar_conclusion) > 0:
+            chat_env.env_dict['content'] = self.seminar_conclusion
+        else:
+            chat_env.env_dict['content'] = "No content, sorry"
+        log_and_print_online("**[Content]**:\n\n {}".format(get_info(chat_env.env_dict['directory'], self.log_filepath)))
+        return chat_env
+    
+class ContentResult(Phase):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def update_phase_env(self, chat_env):
+        self.phase_env.update({"task": chat_env.env_dict['task_prompt'],
+                               "ideas": chat_env.env_dict['ideas'],
+                               "content": chat_env.env_dict['content']})
+        
+    def update_chat_env(self, chat_env) -> ChatEnv:
+        log_and_print_online("**[Result]**:\n\n {}".format(get_info(chat_env.env_dict['directory'], self.log_filepath)))
+        return chat_env
